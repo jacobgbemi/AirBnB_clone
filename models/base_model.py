@@ -22,7 +22,7 @@ class BaseModel():
         """
         Initialize attributes: uuid4, dates when class was created/updated
         """
-        date_format = '%Y-%m-%d %H:%M:%S.%f'
+        date_format = '%Y-%m-%dT%H:%M:%S.%f'
         if kwargs:
             for key, value in kwargs.items():
                 if "created_at" == key:
@@ -71,5 +71,5 @@ class BaseModel():
         dic = self.__dict__.copy()
         dic["created_at"] = self.created_at.isoformat()
         dic["updated_at"] = self.updated_at.isoformat()
-        dic["__class__"] = self-__class__.__name__
+        dic["__class__"] = self.__class__.__name__
         return dic
