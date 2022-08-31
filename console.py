@@ -5,6 +5,12 @@ AirBnB clone command interpreter
 import cmd
 from models import storage
 from models.base_model import BaseModel
+from models.user import User
+from models.amenity import Amenity
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.state import State
 
 
 def parse(arg):
@@ -18,7 +24,8 @@ class HBNBCommand(cmd.Cmd):
     """
     intro = "Welcome to HBNB"
     prompt = "(hbnb)"
-    class_dict = {"BaseModel"}
+    class_dict = {"BaseModel", "State", "City",
+                  "Amenity", "Place", "Review", "User"}
 
     def do_EOF(self, line):
         """Ctrl-D to quit to program"""
@@ -127,6 +134,72 @@ class HBNBCommand(cmd.Cmd):
             print(count)
         else:
             print("** class doesn't exist **")
+
+    def default(self, user_arg):
+        """Use  class name and command arguement to display class instances"""
+        args = user_arg.split('.')
+        class_arg = args[0]
+        if len(args) == 1:
+            print("*** Unknown syntax: {}".format(user_arg))
+            return
+        try:
+            args = args[1].split('(')
+            command = args[0]
+            """ stripping braces around id """
+            arg = args[1].split(")")
+            id_arg = arg[0]
+            id_arg = id_arg.strip("'")
+            id_arg = id_arg.strip('"')
+            ids = class_arg + " " + id_arg
+
+            if command == 'all':
+                HBNBCommand.do_all(self, class_arg)
+            elif command == 'count':
+                HBNBCommand.do_count(self, class_arg)
+            elif command == 'show':
+                HBNBCommand.do_show(self, ids)
+            elif command == 'destroy':
+                HBNBCommand.do_destroy(self, ids)
+            elif command == 'update':
+                args = args[1].split(',')
+                id_arg = args[0].strip("'")
+                id_arg = id_arg.strip('"')
+                # name_arg = args[1].strip(',')
+                # val_arg = args[2]
+                # name_arg = name_arg.strip(' ')
+                # name_arg = name_arg.strip("'")
+                # name_arg = name_arg.strip('"')
+                # val_arg = val_arg.strip(' ')
+                # val_arg = val_arg.strip(')')
+                if type(eval(args[1])) is dict:
+                    for key, value in args[1].items():
+                        args[1] = args[1].split(",")
+                        args[1] = args[1].strip(' ')
+                        args[1] = args[1].strip("}")
+                        name_arg = key.strip('"')
+                        name_arg = key.strip("'")
+                        name_arg = key.split(":")
+                        val_arg = value.strip('"')
+                        val_arg = value.strip("'")
+                        # name_arg = key.strip("{")
+                        val_arg = value.strip(")")
+                else:
+                    # args = args[1].split(',')
+                    # id_arg = args[0].strip("'")
+                    # id_arg = id_arg.strip('"')
+                    name_arg = args[1].strip(',')
+                    val_arg = args[2]
+                    name_arg = name_arg.strip(' ')
+                    name_arg = name_arg.strip("'")
+                    name_arg = name_arg.strip('"')
+                    val_arg = val_arg.strip(' ')
+                    val_arg = val_arg.strip(')')
+                arg = class_arg + ' ' + id_arg + ' ' + name_arg + ' ' + val_arg
+                HBNBCommand.do_update(self, arg)
+            else:
+                print("*** Unknown syntax: {}".format(user_arg))
+        except IndexError:
+            print("*** Unknown syntax: {}".format(user_arg))
 
 
 if __name__ == '__main__':

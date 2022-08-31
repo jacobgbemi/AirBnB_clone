@@ -2,12 +2,12 @@
 '''AirBnB clone project File Storage'''
 import json
 from models.base_model import BaseModel
-#from models.user import User
-# from models.state import State
-# from models.city import City
-# from models.amenity import Amenity
-# from models.place import Place
-# from models.review import Review
+from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 
 
 class FileStorage:
@@ -25,7 +25,9 @@ class FileStorage:
 
     __file_path = 'file.json'
     __objects = {}
-    class_dict = {"BaseModel": BaseModel}
+    class_dict = {"BaseModel": BaseModel, "User": User, "Place": Place,
+                  "Amenity": Amenity, "City": City, "Review": Review,
+                  "State": State}
 
     def all(self):
         '''Return dictionary of <class>.<id> : object instance'''
