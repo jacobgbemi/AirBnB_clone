@@ -22,13 +22,13 @@ class HBNBCommand(cmd.Cmd):
     """
     HBNB command interpreter
     """
-    intro = "Welcome to HBNB"
-    prompt = "(hbnb)"
+    intro = "Welcome to ALX AirBnB clone command interpreter"
+    prompt = "(hbnb) "
     class_dict = {"BaseModel", "State", "City",
                   "Amenity", "Place", "Review", "User"}
 
     def do_EOF(self, line):
-        """Ctrl-D to quit to program"""
+        """Ctrl-D to quit program"""
         print()
         return True
 
@@ -52,7 +52,7 @@ class HBNBCommand(cmd.Cmd):
             print(instance.id)
 
     def do_show(self, user_arg):
-        """Print string repr"""
+        """Print string repr of a class instance, given id"""
         args = parse(user_arg)
         obj_dict = storage.all()
         if len(user_arg) == 0:
@@ -99,8 +99,8 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
 
     def do_update(self, user_arg):
-        """Updates an instance based on the class name and id by adding or
-        updating attribute (save the change into the JSON file)"""
+        """Updates an instance based on the class name and id by adding
+            or updating attribute (save the change into the JSON file)"""
         args = parse(user_arg)
         obj_dict = storage.all()
         if len(args) >= 4:
