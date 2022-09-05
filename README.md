@@ -103,7 +103,8 @@ $ ./console.py
 (hbnb) User.show("9c2cdd8c-262e-4da5-aefb-a9c8c525eabb")
 [User] (9c2cdd8c-262e-4da5-aefb-a9c8c525eabb) {'id': '9c2cdd8c-262e-4da5-aefb-a9c8c525eabb', 'created_at': datetime.datetime(2022, 9, 5, 12, 44, 9, 42912), 'updated_at': datetime.datetime(2022, 9, 5, 12, 44, 9, 42927), 'fisrt_name': '"Gbemi"'}                                                       
 (hbnb)
-(hbnb)   
+(hbnb) quit
+$
 ```
 
 ### Unittest
