@@ -28,15 +28,19 @@ class HBNBCommand(cmd.Cmd):
                   "Amenity", "Place", "Review", "User"}
 
     def do_EOF(self, line):
+        """Ctrl-D to quit program"""
         return True
 
     def help_EOF(self):
+        """help for EOF"""
         print("EOF signal to exit the program\n")
 
     def do_quit(self, line):
+        """quit console (command interpreter"""
         return True
 
     def help_quit(self):
+        """help for quit"""
         print("Quit command to exit the program\n")
 
     def emptyline(self):
@@ -44,6 +48,7 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, user_arg):
+        """create class instance"""
         if len(user_arg) == 0:
             print("** class name missing **")
         elif user_arg not in HBNBCommand.class_dict:
@@ -54,9 +59,11 @@ class HBNBCommand(cmd.Cmd):
             print(instance.id)
 
     def help_create(self):
+        """help for create"""
         print("Create instance specified by user\n")
 
     def do_show(self, user_arg):
+        """show class instance(s)"""
         args = parse(user_arg)
         obj_dict = storage.all()
         if len(user_arg) == 0:
@@ -71,9 +78,11 @@ class HBNBCommand(cmd.Cmd):
             print(obj_dict["{}.{}".format(args[0], args[1])])
 
     def help_show(self):
+        """help for show"""
         print("Print string repr of a class instance, given id\n")
 
     def do_destroy(self, user_arg):
+        """Destroy class instance(S)"""
         args = parse(user_arg)
         obj_dict = storage.all()
         if len(args) == 0:
@@ -89,10 +98,12 @@ class HBNBCommand(cmd.Cmd):
             storage.save()
 
     def help_destroy(self):
+        """ help for destroy"""
         print("Delete a class instance of a given id,", end="")
         print(" save result to json file\n")
 
     def do_all(self, user_arg):
+        """Display all class created instances"""
         args = parse(user_arg)
         obj_dict = storage.all()
         obj_list = []
@@ -107,10 +118,13 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
 
     def help_all(self):
+        """help for all"""
         print("Prints all string representation of all instances", end="")
         print(" based or not on the class name\n")
 
-    """def do_update(self, user_arg):
+    def do_update(self, user_arg):
+        """Updates an instance based on the class name and id by adding
+        or updating attribute (save the change into the JSON file)"""
         args = parse(user_arg)
         obj_dict = storage.all()
         if len(args) >= 4:
@@ -132,58 +146,16 @@ class HBNBCommand(cmd.Cmd):
         elif len(args) == 2:
             print("** attribute name missing **")
         else:
-            print("** value missing **")"""
-
-    def do_update(self, arg):
-        argl = parse(arg)
-        objdict = storage.all()
-
-        if len(argl) == 0:
-            print("** class name missing **")
-            return False
-        if argl[0] not in HBNBCommand.class_dict:
-            print("** class doesn't exist **")
-            return False
-        if len(argl) == 1:
-            print("** instance id missing **")
-            return False
-        if "{}.{}".format(argl[0], argl[1]) not in objdict.keys():
-            print("** no instance found **")
-            return False
-        if len(argl) == 2:
-            print("** attribute name missing **")
-            return False
-        if len(argl) == 3:
-            try:
-                type(eval(argl[2])) != dict
-            except NameError:
-                print("** value missing **")
-                return False
-
-        if len(argl) == 4:
-            obj = objdict["{}.{}".format(argl[0], argl[1])]
-            if argl[2] in obj.__class__.__dict__.keys():
-                valtype = type(obj.__class__.__dict__[argl[2]])
-                obj.__dict__[argl[2]] = valtype(argl[3])
-            else:
-                obj.__dict__[argl[2]] = argl[3]
-        elif type(eval(argl[2])) == dict:
-            obj = objdict["{}.{}".format(argl[0], argl[1])]
-            for k, v in eval(argl[2]).items():
-                if (k in obj.__class__.__dict__.keys() and
-                        type(obj.__class__.__dict__[k]) in {str, int, float}):
-                    valtype = type(obj.__class__.__dict__[k])
-                    obj.__dict__[k] = valtype(v)
-                else:
-                    obj.__dict__[k] = v
-        storage.save()
+            print("** value missing **")
 
     def help_update(self):
+        """help for update"""
         print("Updates an instance based on the class name and id by", end="")
         print(" adding or updating attribute", end="")
         print(" (save the change into the JSON file)\n")
 
     def do_count(self, user_arg):
+        """count number of instances"""
         if user_arg in HBNBCommand.class_dict:
             count = 0
             for key, value in storage.all().items():
@@ -194,6 +166,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
 
     def help_count(self):
+        """help for count"""
         print("Display count of instances specified\n")
 
     def default(self, user_arg):
@@ -232,29 +205,6 @@ class HBNBCommand(cmd.Cmd):
                 name_arg = name_arg.strip('"')
                 val_arg = val_arg.strip(' ')
                 val_arg = val_arg.strip(')')
-                """if type(eval(args[1])) is dict:
-                    for key, value in args[1].items():
-                        args[1] = args[1].split(",")
-                        args[1] = args[1].strip(' ')
-                        args[1] = args[1].strip("}")
-                        name_arg = key.strip('"')
-                        name_arg = key.strip("'")
-                        name_arg = key.split(":")
-                        val_arg = value.strip('"')
-                        val_arg = value.strip("'")
-                        # name_arg = key.strip("{")
-                        val_arg = value.strip(")")
-                else:
-                    # args = args[1].split(',')
-                    # id_arg = args[0].strip("'")
-                    # id_arg = id_arg.strip('"')
-                    name_arg = args[1].strip(',')
-                    val_arg = args[2]
-                    name_arg = name_arg.strip(' ')
-                    name_arg = name_arg.strip("'")
-                    name_arg = name_arg.strip('"')
-                    val_arg = val_arg.strip(' ')
-                    val_arg = val_arg.strip(')')"""
                 arg = class_arg + ' ' + id_arg + ' ' + name_arg + ' ' + val_arg
                 HBNBCommand.do_update(self, arg)
             else:
