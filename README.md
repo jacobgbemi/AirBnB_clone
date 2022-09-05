@@ -9,12 +9,12 @@ The image shows the basic concept for this project
 - [tests](https://github.com/jacobgbemi/AirBnB_clone/tree/main/tests) - a folder containing all the unittest for the codes.
 
 ## Description of command line interpreter
-## Installation
+### Installation
 ```
 git clone git@github.com:gjdame/AirBnB_clone.git
 cd AirBnB_clone
 ```
-### - how to start it
+### - How to start it
 Interactive Mode
 ```
 $ ./console.py
@@ -53,7 +53,7 @@ EOF  help  quit
 $
 ```
 
-### - how to use it
+### - How to use it
 In the console.py, you will find the following commands:
 - ```help```
   - Usage: ```help```
@@ -87,11 +87,12 @@ In the console.py, you will find the following commands:
   - Usage: ```quit```
   - Funtion: ```exits command interpreter```
 
-### - examples
+### - Examples
 - Creating user
 ```
 $ ./console.py
-(hbnb) create User                                                            9c2cdd8c-262e-4da5-aefb-a9c8c525eabb
+(hbnb) create User 
+9c2cdd8c-262e-4da5-aefb-a9c8c525eabb
 (hbnb)
 (hbnb) update User
 ** instance id missing **
@@ -101,7 +102,8 @@ $ ./console.py
 (hbnb) User.update("9c2cdd8c-262e-4da5-aefb-a9c8c525eabb", "fisrt_name", "Gbemi")
 (hbnb) User.show("9c2cdd8c-262e-4da5-aefb-a9c8c525eabb")
 [User] (9c2cdd8c-262e-4da5-aefb-a9c8c525eabb) {'id': '9c2cdd8c-262e-4da5-aefb-a9c8c525eabb', 'created_at': datetime.datetime(2022, 9, 5, 12, 44, 9, 42912), 'updated_at': datetime.datetime(2022, 9, 5, 12, 44, 9, 42927), 'fisrt_name': '"Gbemi"'}                                                       
-(hbnb)                                                                        (hbnb)   
+(hbnb)
+(hbnb)   
 ```
 
 ### Unittest
@@ -114,6 +116,14 @@ $ ./console.py
   $ python3 unittest -m tests/test_console.py
   ```
   
+  ### Tools
+- - PEP8/Coding style: [pycodestyle 2.8.0](https://pypi.org/project/pycodestyle/) || [Google Style Python Docstring](http://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html)
+- - Python 3.8.0
+- - Text edotor: Vim
+- - OS: Ubuntu 20.04(Focal)
+- - VM: VirtualBox and Vagrant (To install Vagrant, follow these [steps](https://github.com/jacobgbemi/zero_day#readme))
+
+
   ### Authors
   - Conrad Obi 
   - Gbemi Jacob Adebayo | [Twitter](https://twitter.com/helpthemgrowup) | [LinkedIn](https://www.linkedin.com/in/gbemi-jacob-adebayo/)
