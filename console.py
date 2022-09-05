@@ -22,7 +22,7 @@ class HBNBCommand(cmd.Cmd):
     """
     HBNB command interpreter
     """
-    intro = "Welcome to ALX AirBnB clone command interpreter"
+    # intro = "Welcome to ALX AirBnB clone command interpreter"
     prompt = "(hbnb) "
     class_dict = {"BaseModel", "State", "City",
                   "Amenity", "Place", "Review", "User"}
