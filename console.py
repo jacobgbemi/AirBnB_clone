@@ -110,7 +110,7 @@ class HBNBCommand(cmd.Cmd):
         print("Prints all string representation of all instances", end="")
         print(" based or not on the class name\n")
 
-    def do_update(self, user_arg):
+    """def do_update(self, user_arg):
         args = parse(user_arg)
         obj_dict = storage.all()
         if len(args) >= 4:
@@ -132,7 +132,51 @@ class HBNBCommand(cmd.Cmd):
         elif len(args) == 2:
             print("** attribute name missing **")
         else:
-            print("** value missing **")
+            print("** value missing **")"""
+
+    def do_update(self, arg):
+        argl = parse(arg)
+        objdict = storage.all()
+
+        if len(argl) == 0:
+            print("** class name missing **")
+            return False
+        if argl[0] not in HBNBCommand.class_dict:
+            print("** class doesn't exist **")
+            return False
+        if len(argl) == 1:
+            print("** instance id missing **")
+            return False
+        if "{}.{}".format(argl[0], argl[1]) not in objdict.keys():
+            print("** no instance found **")
+            return False
+        if len(argl) == 2:
+            print("** attribute name missing **")
+            return False
+        if len(argl) == 3:
+            try:
+                type(eval(argl[2])) != dict
+            except NameError:
+                print("** value missing **")
+                return False
+
+        if len(argl) == 4:
+            obj = objdict["{}.{}".format(argl[0], argl[1])]
+            if argl[2] in obj.__class__.__dict__.keys():
+                valtype = type(obj.__class__.__dict__[argl[2]])
+                obj.__dict__[argl[2]] = valtype(argl[3])
+            else:
+                obj.__dict__[argl[2]] = argl[3]
+        elif type(eval(argl[2])) == dict:
+            obj = objdict["{}.{}".format(argl[0], argl[1])]
+            for k, v in eval(argl[2]).items():
+                if (k in obj.__class__.__dict__.keys() and
+                        type(obj.__class__.__dict__[k]) in {str, int, float}):
+                    valtype = type(obj.__class__.__dict__[k])
+                    obj.__dict__[k] = valtype(v)
+                else:
+                    obj.__dict__[k] = v
+        storage.save()
 
     def help_update(self):
         print("Updates an instance based on the class name and id by", end="")
@@ -181,14 +225,14 @@ class HBNBCommand(cmd.Cmd):
                 args = args[1].split(',')
                 id_arg = args[0].strip("'")
                 id_arg = id_arg.strip('"')
-                # name_arg = args[1].strip(',')
-                # val_arg = args[2]
-                # name_arg = name_arg.strip(' ')
-                # name_arg = name_arg.strip("'")
-                # name_arg = name_arg.strip('"')
-                # val_arg = val_arg.strip(' ')
-                # val_arg = val_arg.strip(')')
-                if type(eval(args[1])) is dict:
+                name_arg = args[1].strip(',')
+                val_arg = args[2]
+                name_arg = name_arg.strip(' ')
+                name_arg = name_arg.strip("'")
+                name_arg = name_arg.strip('"')
+                val_arg = val_arg.strip(' ')
+                val_arg = val_arg.strip(')')
+                """if type(eval(args[1])) is dict:
                     for key, value in args[1].items():
                         args[1] = args[1].split(",")
                         args[1] = args[1].strip(' ')
@@ -210,7 +254,7 @@ class HBNBCommand(cmd.Cmd):
                     name_arg = name_arg.strip("'")
                     name_arg = name_arg.strip('"')
                     val_arg = val_arg.strip(' ')
-                    val_arg = val_arg.strip(')')
+                    val_arg = val_arg.strip(')')"""
                 arg = class_arg + ' ' + id_arg + ' ' + name_arg + ' ' + val_arg
                 HBNBCommand.do_update(self, arg)
             else:
