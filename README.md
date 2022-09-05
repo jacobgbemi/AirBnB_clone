@@ -1,6 +1,7 @@
 # 0x00. AirBnB clone - The console
 The image shows the basic concept for this project
-![AirBnB clone concept](https://github.com/[jacobgbemi]/[AirBnB_clone]/blob/[main]/airbnb_clone.png?raw=true)
+- ![AirBnB clone concept](https://github.com/jacobgbemi/AirBnB_clone/blob/main/airbnb_concept.png)
+- 
 ## Project Description
 - This is a project to create AirBnB clone.
 - [console](https://github.com/jacobgbemi/AirBnB_clone/blob/main/console.py) - contains the codes for command interpreter
