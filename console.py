@@ -113,7 +113,7 @@ class HBNBCommand(cmd.Cmd):
         print("Prints all string representation of all instances", end="")
         print(" based or not on the class name\n")
 
-    """def do_update(self, user_arg):
+    def do_update(self, user_arg):
         args = parse(user_arg)
         obj_dict = storage.all()
         if len(args) >= 4:
@@ -135,36 +135,7 @@ class HBNBCommand(cmd.Cmd):
         elif len(args) == 2:
             print("** attribute name missing **")
         else:
-            print("** value missing **")"""
-
-    def do_update(self, arg):
-        _input = arg.split()
-        switch = 0
-        switch1 = 0
-        objects = storage.all()
-        if _input[0] not in class_check:
-            print("** class doesn't exist **")
-        elif len(_input) < 2:
-            num_list = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
-            for letter in _input[0]:
-                if letter in num_list:
-                    switch1 = 1
-            if switch1 == 1:
-                print("** class name missing **")
-            else:
-                print("** instance id missing **")
-        elif len(_input) < 3:
-            print("** attribute name missing **")
-        elif len(_input) < 4:
             print("** value missing **")
-        elif len(_input) == 4:
-            for key in objects.keys():
-                if _input[1] == key:
-                    objects[key].__dict__[_input[2]] = _input[3]
-                else:
-                    objects[key].__dict__ = ({_input[2]: _input[3]})
-                storage.save()
-                storage.reload()
 
     def help_update(self):
         print("Updates an instance based on the class name and id by", end="")
