@@ -26,6 +26,9 @@ class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb) "
     class_dict = {"BaseModel", "State", "City",
                   "Amenity", "Place", "Review", "User"}
+    class_check = {"Amenity": Amenity, "BaseModel": BaseModel,
+                   "City": City, "Place": Place, "Review": Review,
+                   "State": State, "User": User}
 
     def do_EOF(self, line):
         """Ctrl-D to quit program"""
