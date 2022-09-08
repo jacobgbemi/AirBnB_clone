@@ -26,6 +26,9 @@ class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb) "
     class_dict = {"BaseModel", "State", "City",
                   "Amenity", "Place", "Review", "User"}
+    class_check = {"Amenity": Amenity, "BaseModel": BaseModel,
+                   "City": City, "Place": Place, "Review": Review,
+                   "State": State, "User": User}
 
     def do_EOF(self, line):
         return True
@@ -135,48 +138,33 @@ class HBNBCommand(cmd.Cmd):
             print("** value missing **")"""
 
     def do_update(self, arg):
-        argl = parse(arg)
-        objdict = storage.all()
-
-        if len(argl) == 0:
-            print("** class name missing **")
-            return False
-        if argl[0] not in HBNBCommand.class_dict:
+        _input = arg.split()
+        switch = 0
+        switch1 = 0
+        objects = storage.all()
+        if _input[0] not in class_check:
             print("** class doesn't exist **")
-            return False
-        if len(argl) == 1:
-            print("** instance id missing **")
-            return False
-        if "{}.{}".format(argl[0], argl[1]) not in objdict.keys():
-            print("** no instance found **")
-            return False
-        if len(argl) == 2:
-            print("** attribute name missing **")
-            return False
-        if len(argl) == 3:
-            try:
-                type(eval(argl[2])) != dict
-            except NameError:
-                print("** value missing **")
-                return False
-
-        if len(argl) == 4:
-            obj = objdict["{}.{}".format(argl[0], argl[1])]
-            if argl[2] in obj.__class__.__dict__.keys():
-                valtype = type(obj.__class__.__dict__[argl[2]])
-                obj.__dict__[argl[2]] = valtype(argl[3])
+        elif len(_input) < 2:
+            num_list = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+            for letter in _input[0]:
+                if letter in num_list:
+                    switch1 = 1
+            if switch1 == 1:
+                print("** class name missing **")
             else:
-                obj.__dict__[argl[2]] = argl[3]
-        elif type(eval(argl[2])) == dict:
-            obj = objdict["{}.{}".format(argl[0], argl[1])]
-            for k, v in eval(argl[2]).items():
-                if (k in obj.__class__.__dict__.keys() and
-                        type(obj.__class__.__dict__[k]) in {str, int, float}):
-                    valtype = type(obj.__class__.__dict__[k])
-                    obj.__dict__[k] = valtype(v)
+                print("** instance id missing **")
+        elif len(_input) < 3:
+            print("** attribute name missing **")
+        elif len(_input) < 4:
+            print("** value missing **")
+        elif len(_input) == 4:
+            for key in objects.keys():
+                if _input[1] == key:
+                    objects[key].__dict__[_input[2]] = _input[3]
                 else:
-                    obj.__dict__[k] = v
-        storage.save()
+                    objects[key].__dict__ = ({_input[2]: _input[3]})
+                storage.save()
+                storage.reload()
 
     def help_update(self):
         print("Updates an instance based on the class name and id by", end="")
