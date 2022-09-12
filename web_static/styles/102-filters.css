@@ -1,15 +1,29 @@
 /* search bar */
-div.container {
+/* div.container {
     max-width: 1000px;
     margin: 30px auto;
     /* text-align: center; */
-}
+} */
 section.filters {
-    background-color: white;
+    background-color: #FFFFFF;
     height: 70px;
     width: 100%;
     border: 1px solid #DDDDDD;
     border-radius: 4px;
+}
+
+section.filters:before,
+section.filters:after {
+  content: "";
+  display: table;
+}
+
+section.filters:after {
+  clear: both;
+}
+
+section.filters {
+  *zoom: 1;
 }
 section.filters button {
     background-color: #FF5A5F;
@@ -59,8 +73,10 @@ section.filters button:hover {
     background-color: #FAFAFA;
     border: 1px solid #DDDDDD;
     border-radius: 4px;
-    position: relative;
-    z-index: 1;
+    position: absolute;
+    display: none;
+    width: 100%;
+    /* z-index: 1; */
 }
 .popover h2 {
     font-size: 16px;
@@ -73,4 +89,31 @@ li {
 .locations:hover .popover,
 .amenities:hover .popover {
     display: block;
+}
+
+/* Swap to vertical layout for small screens */
+@media only screen and (max-width: 720px) {
+    .filters {
+      display: grid;
+      height: 210px;
+    }
+  
+    .filters .locations,
+    .filters .amenities {
+      height: 70px;
+      width: 100%;
+      border-bottom: 1px solid #DDDDDD;
+    }
+  
+    .filters .locations:hover .popover,
+    .filters .amenities:hover .popover {
+      margin-left: auto;
+      position: relative;
+      width: 50%;
+      z-index: 1;
+    }
+  
+    .filters .amenities:hover {
+      border-top: 1px solid #DDDDDD;
+    }
 }
